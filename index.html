@@ -244,31 +244,31 @@ const SEGS = [
 // Order: GK-outfield first, then 7 regulars
 
 
-// LB, RB, CM, LF, CF, RF, ST, ST — only subbed chip changes each window
+// LB, RB, CM, LF, CF, RF, ST, ST — only subbed chip changes
 const FIELD = [
-  [{n:'Eloise S',p:'LB',c:'def'},{n:'Georgie', p:'RB',c:'def'},{n:'Neve',   p:'CM',c:'cm'},{n:'Ella',   p:'LF',c:'fwd'},{n:'Gemima', p:'CF',c:'fwd'},{n:'Isla',    p:'RF',c:'fwd'},{n:'Holly',   p:'ST',c:'st'},{n:'Harper', p:'ST',c:'st'}], // S1
-  [{n:'Eloise S',p:'LB',c:'def'},{n:'Georgie', p:'RB',c:'def'},{n:'Neve',   p:'CM',c:'cm'},{n:'Ella',   p:'LF',c:'fwd'},{n:'Gemima', p:'CF',c:'fwd'},{n:'Isla',    p:'RF',c:'fwd'},{n:'Zhana',   p:'ST',c:'st'},{n:'Harper', p:'ST',c:'st'}], // S2 Holly→Zhana
-  [{n:'Arrabella',p:'LB',c:'def'},{n:'Georgie',p:'RB',c:'def'},{n:'Ella S',p:'CM',c:'cm'},{n:'Ella',   p:'LF',c:'fwd'},{n:'Gemima', p:'CF',c:'fwd'},{n:'Eloise P', p:'RF',c:'fwd'},{n:'Zhana',   p:'ST',c:'st'},{n:'Harper', p:'ST',c:'st'}], // S3 Eloise S→Arrabella, Isla→Eloise P, Neve→Ella S
-  [{n:'Arrabella',p:'LB',c:'def'},{n:'Holly',  p:'RB',c:'def'},{n:'Ella S',p:'CM',c:'cm'},{n:'Neve',   p:'LF',c:'fwd'},{n:'Lacey',  p:'CF',c:'fwd'},{n:'Eloise P', p:'RF',c:'fwd'},{n:'Zhana',   p:'ST',c:'st'},{n:'Harper', p:'ST',c:'st'}], // S4 Georgie→Holly, Ella→Neve
-  [{n:'Arrabella',p:'LB',c:'def'},{n:'Holly',  p:'RB',c:'def'},{n:'Ella S',p:'CM',c:'cm'},{n:'Neve',   p:'LF',c:'fwd'},{n:'Lacey',  p:'CF',c:'fwd'},{n:'Eloise P', p:'RF',c:'fwd'},{n:'Eloise S',p:'ST',c:'st'},{n:'Isla',   p:'ST',c:'st'}], // S5
+  [{n:'Eloise S', p:'LB',c:'def'},{n:'Georgie', p:'RB',c:'def'},{n:'Neve',   p:'CM',c:'cm'},{n:'Ella',    p:'LF',c:'fwd'},{n:'Gemima', p:'CF',c:'fwd'},{n:'Isla',    p:'RF',c:'fwd'},{n:'Holly',   p:'ST',c:'st'},{n:'Harper',  p:'ST',c:'st'}], // S1
+  [{n:'Eloise S', p:'LB',c:'def'},{n:'Zhana',   p:'RB',c:'def'},{n:'Neve',   p:'CM',c:'cm'},{n:'Ella',    p:'LF',c:'fwd'},{n:'Gemima', p:'CF',c:'fwd'},{n:'Isla',    p:'RF',c:'fwd'},{n:'Arrabella',p:'ST',c:'st'},{n:'Harper',  p:'ST',c:'st'}], // S2 Holly→Arrabella Georgie→Zhana
+  [{n:'Eloise P', p:'LB',c:'def'},{n:'Zhana',   p:'RB',c:'def'},{n:'Ella S', p:'CM',c:'cm'},{n:'Ella',    p:'LF',c:'fwd'},{n:'Gemima', p:'CF',c:'fwd'},{n:'Isla',    p:'RF',c:'fwd'},{n:'Arrabella',p:'ST',c:'st'},{n:'Harper',  p:'ST',c:'st'}], // S3 Eloise S→Eloise P Neve→Ella S
+  [{n:'Eloise P', p:'LB',c:'def'},{n:'Zhana',   p:'RB',c:'def'},{n:'Ella S', p:'CM',c:'cm'},{n:'Holly',   p:'LF',c:'fwd'},{n:'Lacey',  p:'CF',c:'fwd'},{n:'Georgie', p:'RF',c:'fwd'},{n:'Neve',    p:'ST',c:'st'},{n:'Harper',  p:'ST',c:'st'}], // S4 Ella→Holly Isla→Georgie Arrabella→Neve
+  [{n:'Eloise P', p:'LB',c:'def'},{n:'Arrabella',p:'RB',c:'def'},{n:'Ella S',p:'CM',c:'cm'},{n:'Holly',   p:'LF',c:'fwd'},{n:'Lacey',  p:'CF',c:'fwd'},{n:'Georgie', p:'RF',c:'fwd'},{n:'Neve',    p:'ST',c:'st'},{n:'Eloise S',p:'ST',c:'st'}], // S5 Zhana→Arrabella Harper→Eloise S
 ];
 
 const BENCH = [
   ['Arrabella','Eloise P','Ella S','Zhana'],   // S1
-  ['Arrabella','Eloise P','Ella S','Holly'],   // S2
-  ['Holly','Eloise S','Isla','Neve'],          // S3
-  ['Ella','Georgie','Eloise S','Isla'],        // S4
-  ['Ella','Georgie','Zhana','Harper'],         // S5
+  ['Eloise P','Ella S','Holly','Georgie'],     // S2
+  ['Holly','Georgie','Eloise S','Neve'],       // S3
+  ['Arrabella','Eloise S','Ella','Isla'],      // S4
+  ['Zhana','Harper','Ella','Isla'],            // S5
 ];
 
 // Sub at END of segment (null = no sub / game ends)
 const SUBS = [
-  { off:'Holly',   on:'Zhana',   atMin:'10', count:1 },
-  { off3:['Eloise S','Isla','Neve'], on3:['Arrabella','Eloise P','Ella S'], atMin:'20', count:3 },
+  { off2:['Holly','Georgie'],      on2:['Arrabella','Zhana'],       atMin:'10', count:2 },
+  { off2:['Eloise S','Neve'],      on2:['Eloise P','Ella S'],       atMin:'20', count:2 },
   { htMid:true, atMin:'25', gkSwap:'Lacey → Outfield  ·  Gemima → GK', note:'GK swap mid-segment — no outfield change' },
-  { off2:['Georgie','Ella'],  on2:['Holly','Neve'],     atMin:'30', count:2 },
-  { off2:['Zhana','Harper'], on2:['Eloise S','Isla'], atMin:'40', count:2 },
-  { off:'Neve', on:'Georgie', atMin:'46', count:1 },
+  { off3:['Ella','Isla','Arrabella'], on3:['Holly','Georgie','Neve'], atMin:'30', count:3 },
+  { off2:['Zhana','Harper'],       on2:['Arrabella','Eloise S'],    atMin:'40', count:2 },
+  { off:'Neve',                    on:'Ella',                       atMin:'46', count:1 },
   null,
 ];
 
@@ -276,15 +276,15 @@ const MINUTES = [
   { n:'Lacey',    m:50, cat:'gk',  note:'GK all H1 · Outfield all H2' },
   { n:'Gemima',   m:50, cat:'gk',  note:'Outfield all H1 · GK all H2' },
   { n:'Neve',     m:40, cat:'v30', note:'S1 S2 S4 S5 · CM anchor' },
-  { n:'Harper',   m:40, cat:'v30', note:'S1 S2 S3 S4 · extra mins today' },
-  { n:'Arrabella',m:30, cat:'v29', note:'S3 S4 S5' },
+  { n:'Harper',   m:40, cat:'v30', note:'S1 S2 S3 S4' },
+  { n:'Arrabella',m:30, cat:'v29', note:'S2 S3 S5' },
   { n:'Eloise P', m:30, cat:'v29', note:'S3 S4 S5' },
   { n:'Ella S',   m:30, cat:'v29', note:'S3 S4 S5' },
   { n:'Holly',    m:30, cat:'v29', note:'S1 S4 S5' },
   { n:'Eloise S', m:30, cat:'v29', note:'S1 S2 S5' },
-  { n:'Isla',     m:30, cat:'v29', note:'S1 S2 S5' },
+  { n:'Georgie',  m:30, cat:'v29', note:'S1 S4 S5' },
   { n:'Ella',     m:30, cat:'v29', note:'S1 S2 S3' },
-  { n:'Georgie',  m:30, cat:'v29', note:'S1 S2 S3' },
+  { n:'Isla',     m:30, cat:'v29', note:'S1 S2 S3' },
   { n:'Zhana',    m:30, cat:'v29', note:'S2 S3 S4' },
 ];
 
@@ -391,7 +391,7 @@ function renderRotation() {
       width:100%;padding:13px;background:#1e293b;border:none;
       border-radius:10px;color:#64748b;font-family:'DM Sans',sans-serif;
       font-size:14px;font-weight:600;cursor:pointer;text-align:center;
-    ">Next: ${next.key} (${next.time} min) →</button>`;
+    ">Next: ${next.key} (${next.time}) →</button>`;
   }
 
   return html;
@@ -401,12 +401,12 @@ function renderSubs() {
   let html = `<div style="padding:16px;">`;
   html += `<div class="subs-intro"><strong>4 sub windows.</strong> Max 3 at once. HT is a GK role swap only — no outfield change. Neve + Harper get <strong>40 min</strong>. Everyone else <strong>30 min</strong>.</div>`;
   const events = [
-    { time:'10', label:'1 Sub', pairs:[['Holly','Zhana']] },
-    { time:'20', label:'3 Subs', pairs:[['Eloise S','Arrabella'],['Isla','Eloise P'],['Neve','Ella S']] },
+    { time:'10', label:'2 Subs', pairs:[['Holly','Arrabella'],['Georgie','Zhana']] },
+    { time:'20', label:'2 Subs', pairs:[['Eloise S','Eloise P'],['Neve','Ella S']] },
     { time:'25', label:'Half Time — GK swap only', ht:true, note:'Lacey → Outfield · Gemima → GK · No outfield change' },
-    { time:'30', label:'2 Subs', pairs:[['Georgie','Holly'],['Ella','Neve']] },
-    { time:'40', label:'2 Subs', pairs:[['Zhana','Eloise S'],['Harper','Isla']] },
-    { time:'46', label:'1 Sub', pairs:[['Neve','Georgie']] },
+    { time:'30', label:'3 Subs', pairs:[['Ella','Holly'],['Isla','Georgie'],['Arrabella','Neve']] },
+    { time:'40', label:'2 Subs', pairs:[['Zhana','Arrabella'],['Harper','Eloise S']] },
+    { time:'46', label:'1 Sub',  pairs:[['Neve','Ella']] },
   ];
   events.forEach(ev => {
     if (ev.ht) {
