@@ -254,62 +254,63 @@ const SEGS = [
 // Fixed canonical order: LB, RB, CM, LF, CF, RF, ST, ST
 // Only ONE name changes per segment — the subbed player's chip. All others frozen.
 // GKs: Lacey (H1 goal), Gemima (H2 goal). Gemima plays outfield H1, Lacey plays outfield H2.
+// Arrabella: off at 17 min (Sub 4), returns at 37 min (Sub 9) — Option B fix.
 // Neve starts CM as required.
 const FIELD = [
-  [{n:'Eloise S', p:'LB',c:'def'},{n:'Holly',    p:'RB',c:'def'},{n:'Neve',    p:'CM',c:'cm'},{n:'Eloise P',p:'LF',c:'fwd'},{n:'Harper',   p:'CF',c:'fwd'},{n:'Gemima',    p:'RF',c:'fwd'},{n:'Arrabella',p:'ST',c:'st'},{n:'Georgie',  p:'ST',c:'st'}], // S1  start
-  [{n:'Eloise S', p:'LB',c:'def'},{n:'Holly',    p:'RB',c:'def'},{n:'Neve',    p:'CM',c:'cm'},{n:'Eloise P',p:'LF',c:'fwd'},{n:'Harper',   p:'CF',c:'fwd'},{n:'Gemima',    p:'RF',c:'fwd'},{n:'Ella S',   p:'ST',c:'st'},{n:'Georgie',  p:'ST',c:'st'}], // S2  Arrabella→Ella S
-  [{n:'Eloise S', p:'LB',c:'def'},{n:'Holly',    p:'RB',c:'def'},{n:'Neve',    p:'CM',c:'cm'},{n:'Eloise P',p:'LF',c:'fwd'},{n:'Harper',   p:'CF',c:'fwd'},{n:'Gemima',    p:'RF',c:'fwd'},{n:'Ella S',   p:'ST',c:'st'},{n:'Charli',  p:'ST',c:'st'}], // S3  Gemima→Charli
-  [{n:'Isla',     p:'LB',c:'def'},{n:'Holly',    p:'RB',c:'def'},{n:'Neve',    p:'CM',c:'cm'},{n:'Eloise P',p:'LF',c:'fwd'},{n:'Harper',   p:'CF',c:'fwd'},{n:'Gemima',    p:'RF',c:'fwd'},{n:'Ella S',   p:'ST',c:'st'},{n:'Charli',  p:'ST',c:'st'}], // S4  Eloise S→Isla
-  [{n:'Isla',     p:'LB',c:'def'},{n:'Holly',    p:'RB',c:'def'},{n:'Lacey',   p:'CM',c:'cm'},{n:'Eloise P',p:'LF',c:'fwd'},{n:'Harper',   p:'CF',c:'fwd'},{n:'Gemima',    p:'RF',c:'fwd'},{n:'Ella S',   p:'ST',c:'st'},{n:'Charli',  p:'ST',c:'st'}], // S5  Neve→Lacey
-  [{n:'Isla',     p:'LB',c:'def'},{n:'Holly',    p:'RB',c:'def'},{n:'Lacey',   p:'CM',c:'cm'},{n:'Eloise P',p:'LF',c:'fwd'},{n:'Zhana',    p:'CF',c:'fwd'},{n:'Gemima',    p:'RF',c:'fwd'},{n:'Ella S',   p:'ST',c:'st'},{n:'Charli',  p:'ST',c:'st'}], // S6  Harper→Zhana
-  [{n:'Isla',     p:'LB',c:'def'},{n:'Arrabella',p:'RB',c:'def'},{n:'Ella',   p:'CM',c:'cm'},{n:'Eloise P',p:'LF',c:'fwd'},{n:'Zhana',    p:'CF',c:'fwd'},{n:'Lacey', p:'RF',c:'fwd'},{n:'Ella S',   p:'ST',c:'st'},{n:'Charli',  p:'ST',c:'st'}], // S7  HT: Holly→Arrabella(RB), Gemima→GK, Lacey→RF
-  [{n:'Isla',     p:'LB',c:'def'},{n:'Arrabella',p:'RB',c:'def'},{n:'Ella',   p:'CM',c:'cm'},{n:'Gemima',  p:'LF',c:'fwd'},{n:'Zhana',    p:'CF',c:'fwd'},{n:'Lacey', p:'RF',c:'fwd'},{n:'Ella S',   p:'ST',c:'st'},{n:'Charli',  p:'ST',c:'st'}], // S8  Eloise P→Gemima
-  [{n:'Isla',     p:'LB',c:'def'},{n:'Arrabella',p:'RB',c:'def'},{n:'Ella',   p:'CM',c:'cm'},{n:'Gemima',  p:'LF',c:'fwd'},{n:'Zhana',    p:'CF',c:'fwd'},{n:'Lacey', p:'RF',c:'fwd'},{n:'Eloise S', p:'ST',c:'st'},{n:'Charli',  p:'ST',c:'st'}], // S9  Ella S→Eloise S
-  [{n:'Isla',     p:'LB',c:'def'},{n:'Arrabella',p:'RB',c:'def'},{n:'Ella',   p:'CM',c:'cm'},{n:'Gemima',  p:'LF',c:'fwd'},{n:'Zhana',    p:'CF',c:'fwd'},{n:'Lacey', p:'RF',c:'fwd'},{n:'Eloise S', p:'ST',c:'st'},{n:'Neve',    p:'ST',c:'st'}], // S10 Charli→Neve
-  [{n:'Harper',   p:'LB',c:'def'},{n:'Arrabella',p:'RB',c:'def'},{n:'Ella',   p:'CM',c:'cm'},{n:'Gemima',  p:'LF',c:'fwd'},{n:'Zhana',    p:'CF',c:'fwd'},{n:'Lacey', p:'RF',c:'fwd'},{n:'Eloise S', p:'ST',c:'st'},{n:'Neve',    p:'ST',c:'st'}], // S11 Isla→Harper
-  [{n:'Harper',   p:'LB',c:'def'},{n:'Arrabella',p:'RB',c:'def'},{n:'Holly',   p:'CM',c:'cm'},{n:'Gemima',  p:'LF',c:'fwd'},{n:'Zhana',    p:'CF',c:'fwd'},{n:'Lacey', p:'RF',c:'fwd'},{n:'Eloise S', p:'ST',c:'st'},{n:'Neve',    p:'ST',c:'st'}], // S12 Lacey→Holly
+  [{n:'Eloise S',p:'LB',c:'def'},{n:'Holly',   p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Eloise P',p:'LF',c:'fwd'},{n:'Gemima', p:'CF',c:'fwd'},{n:'Georgie', p:'RF',c:'fwd'},{n:'Arrabella',p:'ST',c:'st'},{n:'Harper', p:'ST',c:'st'}], // S1  start
+  [{n:'Eloise S',p:'LB',c:'def'},{n:'Holly',   p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Eloise P',p:'LF',c:'fwd'},{n:'Gemima', p:'CF',c:'fwd'},{n:'Ella S',  p:'RF',c:'fwd'},{n:'Arrabella',p:'ST',c:'st'},{n:'Harper', p:'ST',c:'st'}], // S2  Georgie→Ella S
+  [{n:'Charli',  p:'LB',c:'def'},{n:'Holly',   p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Eloise P',p:'LF',c:'fwd'},{n:'Gemima', p:'CF',c:'fwd'},{n:'Ella S',  p:'RF',c:'fwd'},{n:'Arrabella',p:'ST',c:'st'},{n:'Harper', p:'ST',c:'st'}], // S3  Eloise S→Charli
+  [{n:'Charli',  p:'LB',c:'def'},{n:'Holly',   p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Eloise P',p:'LF',c:'fwd'},{n:'Gemima', p:'CF',c:'fwd'},{n:'Ella S',  p:'RF',c:'fwd'},{n:'Arrabella',p:'ST',c:'st'},{n:'Isla',   p:'ST',c:'st'}], // S4  Harper→Isla
+  [{n:'Charli',  p:'LB',c:'def'},{n:'Holly',   p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Eloise P',p:'LF',c:'fwd'},{n:'Gemima', p:'CF',c:'fwd'},{n:'Ella S',  p:'RF',c:'fwd'},{n:'Ella',    p:'ST',c:'st'},{n:'Isla',   p:'ST',c:'st'}], // S5  Arrabella→Ella
+  [{n:'Charli',  p:'LB',c:'def'},{n:'Holly',   p:'RB',c:'def'},{n:'Zhana', p:'CM',c:'cm'},{n:'Eloise P',p:'LF',c:'fwd'},{n:'Gemima', p:'CF',c:'fwd'},{n:'Ella S',  p:'RF',c:'fwd'},{n:'Ella',    p:'ST',c:'st'},{n:'Isla',   p:'ST',c:'st'}], // S6  Neve→Zhana
+  [{n:'Charli',  p:'LB',c:'def'},{n:'Georgie', p:'RB',c:'def'},{n:'Zhana', p:'CM',c:'cm'},{n:'Eloise P',p:'LF',c:'fwd'},{n:'Lacey',  p:'CF',c:'fwd'},{n:'Ella S',  p:'RF',c:'fwd'},{n:'Ella',    p:'ST',c:'st'},{n:'Isla',   p:'ST',c:'st'}], // S7  HT: Holly→Georgie, Gemima→GK, Lacey→CF
+  [{n:'Charli',  p:'LB',c:'def'},{n:'Georgie', p:'RB',c:'def'},{n:'Zhana', p:'CM',c:'cm'},{n:'Eloise S',p:'LF',c:'fwd'},{n:'Lacey',  p:'CF',c:'fwd'},{n:'Ella S',  p:'RF',c:'fwd'},{n:'Ella',    p:'ST',c:'st'},{n:'Isla',   p:'ST',c:'st'}], // S8  Eloise P→Eloise S
+  [{n:'Charli',  p:'LB',c:'def'},{n:'Georgie', p:'RB',c:'def'},{n:'Zhana', p:'CM',c:'cm'},{n:'Eloise S',p:'LF',c:'fwd'},{n:'Lacey',  p:'CF',c:'fwd'},{n:'Harper', p:'RF',c:'fwd'},{n:'Ella',    p:'ST',c:'st'},{n:'Isla',   p:'ST',c:'st'}], // S9  Ella S→Harper
+  [{n:'Arrabella',p:'LB',c:'def'},{n:'Georgie',p:'RB',c:'def'},{n:'Zhana', p:'CM',c:'cm'},{n:'Eloise S',p:'LF',c:'fwd'},{n:'Lacey',  p:'CF',c:'fwd'},{n:'Harper', p:'RF',c:'fwd'},{n:'Ella',    p:'ST',c:'st'},{n:'Isla',   p:'ST',c:'st'}], // S10 Charli→Arrabella
+  [{n:'Arrabella',p:'LB',c:'def'},{n:'Georgie',p:'RB',c:'def'},{n:'Zhana', p:'CM',c:'cm'},{n:'Eloise S',p:'LF',c:'fwd'},{n:'Lacey',  p:'CF',c:'fwd'},{n:'Harper', p:'RF',c:'fwd'},{n:'Ella',    p:'ST',c:'st'},{n:'Neve',   p:'ST',c:'st'}], // S11 Isla→Neve
+  [{n:'Arrabella',p:'LB',c:'def'},{n:'Georgie',p:'RB',c:'def'},{n:'Zhana', p:'CM',c:'cm'},{n:'Eloise S',p:'LF',c:'fwd'},{n:'Lacey',  p:'CF',c:'fwd'},{n:'Harper', p:'RF',c:'fwd'},{n:'Holly',   p:'ST',c:'st'},{n:'Neve',   p:'ST',c:'st'}], // S12 Ella→Holly
 ];
 
 const BENCH = [
   ['Ella S','Charli','Isla','Ella','Zhana'],              // S1
-  ['Charli','Isla','Ella','Zhana','Arrabella'],           // S2
-  ['Isla','Ella','Zhana','Arrabella','Georgie'],           // S3
-  ['Ella','Zhana','Arrabella','Georgie','Eloise S'],       // S4
-  ['Zhana','Arrabella','Georgie','Eloise S','Neve'],        // S5
-  ['Arrabella','Georgie','Eloise S','Neve','Harper'],       // S6
-  ['Georgie','Eloise S','Neve','Harper','Holly'],           // S7
-  ['Eloise P','Eloise S','Neve','Harper','Holly'],         // S8
-  ['Eloise P','Ella S','Neve','Harper','Holly'],           // S9
-  ['Eloise P','Ella S','Charli','Harper','Holly'],         // S10
-  ['Eloise P','Ella S','Charli','Isla','Holly'],           // S11
+  ['Charli','Isla','Ella','Zhana','Georgie'],             // S2
+  ['Isla','Ella','Zhana','Georgie','Eloise S'],           // S3
+  ['Ella','Zhana','Georgie','Eloise S','Harper'],         // S4
+  ['Zhana','Georgie','Eloise S','Harper','Arrabella'],    // S5
+  ['Georgie','Eloise S','Harper','Arrabella','Neve'],     // S6
+  ['Eloise S','Harper','Arrabella','Neve','Holly'],       // S7
+  ['Harper','Arrabella','Neve','Holly','Eloise P'],       // S8
+  ['Arrabella','Neve','Holly','Eloise P','Ella S'],       // S9
+  ['Neve','Holly','Eloise P','Ella S','Charli'],          // S10
+  ['Holly','Eloise P','Ella S','Charli','Isla'],          // S11
   ['Eloise P','Ella S','Charli','Isla','Ella'],           // S12
 ];
 
 // Sub at END of segment (null = no sub / game ends)
 const SUBS = [
-  { off:'Arrabella', on:'Ella S',   atMin:'4'  },
-  { off:'Georgie',   on:'Charli',   atMin:'8'  },
-  { off:'Eloise S',  on:'Isla',     atMin:'13' },
-  { off:'Neve',      on:'Ella',     atMin:'17' },
-  { off:'Harper',    on:'Zhana',    atMin:'21' },
-  { off:'Holly',     on:'Arrabella',atMin:'HT·25', isHT:true,
+  { off:'Georgie',   on:'Ella S',    atMin:'4'  },
+  { off:'Eloise S',  on:'Charli',    atMin:'8'  },
+  { off:'Harper',    on:'Isla',      atMin:'13' },
+  { off:'Arrabella', on:'Ella',      atMin:'17' },
+  { off:'Neve',      on:'Zhana',     atMin:'21' },
+  { off:'Holly',     on:'Georgie',   atMin:'HT·25', isHT:true,
     gkSwap:'Lacey → Outfield  ·  Gemima → GK' },
-  { off:'Eloise P',  on:'Georgie',  atMin:'29' },
-  { off:'Ella S',    on:'Eloise S', atMin:'33' },
-  { off:'Charli',    on:'Neve',     atMin:'37' },
-  { off:'Isla',      on:'Harper',   atMin:'42' },
-  { off:'Ella',      on:'Holly',    atMin:'46' },
-  null, // S12 - game ends
+  { off:'Eloise P',  on:'Eloise S',  atMin:'29' },
+  { off:'Ella S',    on:'Harper',    atMin:'33' },
+  { off:'Charli',    on:'Arrabella', atMin:'37' },
+  { off:'Isla',      on:'Neve',      atMin:'42' },
+  { off:'Ella',      on:'Holly',     atMin:'46' },
+  null,
 ];
 
 const MINUTES = [
   { n:'Lacey',    m:50, cat:'gk',  note:'GK all H1 · Outfield all H2' },
   { n:'Gemima',   m:50, cat:'gk',  note:'Outfield all H1 · GK all H2' },
-  { n:'Eloise S', m:30, cat:'v30', note:'S1–S3 + S9–S12  ·  both 5-min segs' },
-  { n:'Neve',     m:30, cat:'v30', note:'S1–S4 + S10–S12  ·  both 5-min segs' },
-  { n:'Arrabella',m:29, cat:'v29', note:'S1 + S7–S12' },
-  { n:'Georgie',  m:29, cat:'v29', note:'S1–S2 + S8–S12' },
-  { n:'Harper',   m:29, cat:'v29', note:'S1–S5 + S11–S12' },
+  { n:'Arrabella',m:30, cat:'v30', note:'S1–S4 + S10–S12  ·  both 5-min segs' },
+  { n:'Harper',   m:30, cat:'v30', note:'S1–S3 + S9–S12  ·  both 5-min segs' },
+  { n:'Georgie',  m:29, cat:'v29', note:'S1 + S7–S12' },
+  { n:'Eloise S', m:29, cat:'v29', note:'S1–S2 + S8–S12' },
+  { n:'Neve',     m:29, cat:'v29', note:'S1–S5 + S11–S12' },
   { n:'Holly',    m:29, cat:'v29', note:'S1–S6 + S12' },
   { n:'Eloise P', m:29, cat:'v29', note:'S1–S7' },
   { n:'Ella S',   m:29, cat:'v29', note:'S2–S8' },
