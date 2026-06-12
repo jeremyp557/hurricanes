@@ -205,7 +205,7 @@
   <div class="hdr-row">
     <div>
       <div class="hdr-title">Rotation Planner</div>
-      <div class="hdr-sub">13 players · 9 on field · 50 min · 4 sub windows</div>
+      <div class="hdr-sub">12 players · 9 on field · 2×25 min · 1 sub every 5 min</div>
     </div>
     <div class="hdr-badge">12 SEGMENTS</div>
   </div>
@@ -233,11 +233,16 @@
 // Eloise P plays outfield in H1, Holly plays outfield in H2
 
 const SEGS = [
-  { key:'S1', time:'0 – 10',  dur:10, half:1, gk:'Holly',  gkNote:'GK · H1', htBefore:false, htMid:false },
-  { key:'S2', time:'10 – 20', dur:10, half:1, gk:'Holly',  gkNote:'GK · H1', htBefore:false, htMid:false },
-  { key:'S3', time:'20 – 30', dur:10, half:1, gk:'Holly',  gkNote:'GK · H1', htBefore:false, htMid:true  },
-  { key:'S4', time:'30 – 40', dur:10, half:2, gk:'Gemima', gkNote:'GK · H2', htBefore:false, htMid:false },
-  { key:'S5', time:'40 – 50', dur:10, half:2, gk:'Gemima', gkNote:'GK · H2', htBefore:false, htMid:false },
+  { key:'S1',  time:'0 – 5',   dur:5, half:1, gk:'Lacey',    gkNote:'GK · H1', htBefore:false },
+  { key:'S2',  time:'5 – 10',  dur:5, half:1, gk:'Lacey',    gkNote:'GK · H1', htBefore:false },
+  { key:'S3',  time:'10 – 15', dur:5, half:1, gk:'Lacey',    gkNote:'GK · H1', htBefore:false },
+  { key:'S4',  time:'15 – 20', dur:5, half:1, gk:'Lacey',    gkNote:'GK · H1', htBefore:false },
+  { key:'S5',  time:'20 – 25', dur:5, half:1, gk:'Lacey',    gkNote:'GK · H1', htBefore:false },
+  { key:'S6',  time:'25 – 30', dur:5, half:2, gk:'Arrabella',gkNote:'GK · H2', htBefore:true  },
+  { key:'S7',  time:'30 – 35', dur:5, half:2, gk:'Arrabella',gkNote:'GK · H2', htBefore:false },
+  { key:'S8',  time:'35 – 40', dur:5, half:2, gk:'Arrabella',gkNote:'GK · H2', htBefore:false },
+  { key:'S9',  time:'40 – 45', dur:5, half:2, gk:'Arrabella',gkNote:'GK · H2', htBefore:false },
+  { key:'S10', time:'45 – 50', dur:5, half:2, gk:'Arrabella',gkNote:'GK · H2', htBefore:false },
 ];
 
 
@@ -247,49 +252,63 @@ const SEGS = [
 
 // Fixed canonical order: LB, RB, CM, LF, CF, RF, ST, ST
 // Only ONE name changes per segment — the subbed player's chip. All others frozen.
-// GKs: Lacey (H1 goal), Gemima (H2 goal). Gemima plays outfield H1, Lacey plays outfield H2.
+// GKs: Lacey (H1 goal), Arrabella (H2 goal). Each plays ST outfield in their non-goal half.\n// 10 segs x 5 min. One sub per window. Every regular: one 15-min bench stint, 35 min played.
 // Arrabella: off at 17 min (Sub 4), returns at 37 min (Sub 9) — Option B fix.
 // Neve starts CM as required.
 const FIELD = [
-  [{n:'Georgie',   p:'LB',c:'def'},{n:'Eloise S',p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Ella',    p:'LF',c:'fwd'},{n:'Gemima', p:'CF',c:'fwd'},{n:'Harper',  p:'RF',c:'fwd'},{n:'Arrabella',p:'ST',c:'st'},{n:'Isla',    p:'ST',c:'st'}], // S1
-  [{n:'Lacey',    p:'LB',c:'def'},{n:'Eloise S',p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Ella',    p:'LF',c:'fwd'},{n:'Gemima', p:'CF',c:'fwd'},{n:'Harper',  p:'RF',c:'fwd'},{n:'Arrabella',p:'ST',c:'st'},{n:'Isla',    p:'ST',c:'st'}], // S2  Georgie→Lacey
-  [{n:'Lacey',    p:'LB',c:'def'},{n:'Ella S',  p:'RB',c:'def'},{n:'Charli',p:'CM',c:'cm'},{n:'Ella',    p:'LF',c:'fwd'},{n:'Gemima', p:'CF',c:'fwd'},{n:'Harper',  p:'RF',c:'fwd'},{n:'Eloise P', p:'ST',c:'st'},{n:'Isla',    p:'ST',c:'st'}], // S3  Arrabella+Eloise S+Neve off · Eloise P+Ella S+Charli on
-  [{n:'Lacey',    p:'LB',c:'def'},{n:'Ella S',  p:'RB',c:'def'},{n:'Charli',p:'CM',c:'cm'},{n:'Georgie', p:'LF',c:'fwd'},{n:'Holly',  p:'CF',c:'fwd'},{n:'Harper',  p:'RF',c:'fwd'},{n:'Eloise P', p:'ST',c:'st'},{n:'Neve',    p:'ST',c:'st'}], // S4  Ella+Isla off · Georgie+Neve on · GK swap
-  [{n:'Arrabella',p:'LB',c:'def'},{n:'Ella S',  p:'RB',c:'def'},{n:'Charli',p:'CM',c:'cm'},{n:'Georgie', p:'LF',c:'fwd'},{n:'Holly',  p:'CF',c:'fwd'},{n:'Eloise S',p:'RF',c:'fwd'},{n:'Eloise P', p:'ST',c:'st'},{n:'Neve',    p:'ST',c:'st'}], // S5  Lacey+Harper off · Arrabella+Eloise S on
+  [{n:'Eloise P',p:'LB',c:'def'},{n:'Georgie', p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Holly',   p:'LF',c:'fwd'},{n:'Zhana',  p:'CF',c:'fwd'},{n:'Ella',   p:'RF',c:'fwd'},{n:'Harper', p:'ST',c:'st'},{n:'Arrabella',p:'ST',c:'st'}], // S1
+  [{n:'Eloise P',p:'LB',c:'def'},{n:'Georgie', p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Holly',   p:'LF',c:'fwd'},{n:'Charli', p:'CF',c:'fwd'},{n:'Ella',   p:'RF',c:'fwd'},{n:'Harper', p:'ST',c:'st'},{n:'Arrabella',p:'ST',c:'st'}], // S2  Zhana→Charli
+  [{n:'Eloise P',p:'LB',c:'def'},{n:'Ella S',  p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Holly',   p:'LF',c:'fwd'},{n:'Charli', p:'CF',c:'fwd'},{n:'Ella',   p:'RF',c:'fwd'},{n:'Harper', p:'ST',c:'st'},{n:'Arrabella',p:'ST',c:'st'}], // S3  Georgie→Ella S
+  [{n:'Eloise P',p:'LB',c:'def'},{n:'Ella S',  p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Eloise S',p:'LF',c:'fwd'},{n:'Charli', p:'CF',c:'fwd'},{n:'Ella',   p:'RF',c:'fwd'},{n:'Harper', p:'ST',c:'st'},{n:'Arrabella',p:'ST',c:'st'}], // S4  Holly→Eloise S
+  [{n:'Eloise P',p:'LB',c:'def'},{n:'Ella S',  p:'RB',c:'def'},{n:'Zhana', p:'CM',c:'cm'},{n:'Eloise S',p:'LF',c:'fwd'},{n:'Charli', p:'CF',c:'fwd'},{n:'Ella',   p:'RF',c:'fwd'},{n:'Harper', p:'ST',c:'st'},{n:'Arrabella',p:'ST',c:'st'}], // S5  Neve→Zhana
+  [{n:'Eloise P',p:'LB',c:'def'},{n:'Ella S',  p:'RB',c:'def'},{n:'Zhana', p:'CM',c:'cm'},{n:'Eloise S',p:'LF',c:'fwd'},{n:'Charli', p:'CF',c:'fwd'},{n:'Georgie',p:'RF',c:'fwd'},{n:'Harper', p:'ST',c:'st'},{n:'Lacey',    p:'ST',c:'st'}], // S6  HT: Ella→Georgie · Arrabella→GK · Lacey→ST
+  [{n:'Eloise P',p:'LB',c:'def'},{n:'Ella S',  p:'RB',c:'def'},{n:'Zhana', p:'CM',c:'cm'},{n:'Eloise S',p:'LF',c:'fwd'},{n:'Charli', p:'CF',c:'fwd'},{n:'Georgie',p:'RF',c:'fwd'},{n:'Holly',  p:'ST',c:'st'},{n:'Lacey',    p:'ST',c:'st'}], // S7  Harper→Holly
+  [{n:'Neve',    p:'LB',c:'def'},{n:'Ella S',  p:'RB',c:'def'},{n:'Zhana', p:'CM',c:'cm'},{n:'Eloise S',p:'LF',c:'fwd'},{n:'Charli', p:'CF',c:'fwd'},{n:'Georgie',p:'RF',c:'fwd'},{n:'Holly',  p:'ST',c:'st'},{n:'Lacey',    p:'ST',c:'st'}], // S8  Eloise P→Neve (coach: Neve↔Zhana to put Neve CM)
+  [{n:'Neve',    p:'LB',c:'def'},{n:'Ella S',  p:'RB',c:'def'},{n:'Zhana', p:'CM',c:'cm'},{n:'Eloise S',p:'LF',c:'fwd'},{n:'Ella',   p:'CF',c:'fwd'},{n:'Georgie',p:'RF',c:'fwd'},{n:'Holly',  p:'ST',c:'st'},{n:'Lacey',    p:'ST',c:'st'}], // S9  Charli→Ella
+  [{n:'Neve',    p:'LB',c:'def'},{n:'Harper',  p:'RB',c:'def'},{n:'Zhana', p:'CM',c:'cm'},{n:'Eloise S',p:'LF',c:'fwd'},{n:'Ella',   p:'CF',c:'fwd'},{n:'Georgie',p:'RF',c:'fwd'},{n:'Holly',  p:'ST',c:'st'},{n:'Lacey',    p:'ST',c:'st'}], // S10 Ella S→Harper
 ];
 
 const BENCH = [
-  ['Eloise P','Ella S','Charli','Lacey'],          // S1
-  ['Eloise P','Ella S','Charli','Georgie'],         // S2
-  ['Arrabella','Eloise S','Neve','Georgie'],        // S3
-  ['Arrabella','Eloise S','Ella','Isla'],           // S4
-  ['Ella','Isla','Lacey','Harper'],                 // S5
+  ['Charli','Ella S','Eloise S'],     // S1
+  ['Ella S','Eloise S','Zhana'],      // S2
+  ['Eloise S','Zhana','Georgie'],     // S3
+  ['Zhana','Georgie','Holly'],        // S4
+  ['Georgie','Holly','Neve'],         // S5
+  ['Holly','Neve','Ella'],            // S6
+  ['Neve','Ella','Harper'],           // S7
+  ['Ella','Harper','Eloise P'],       // S8
+  ['Harper','Eloise P','Charli'],     // S9
+  ['Eloise P','Charli','Ella S'],     // S10
 ];
 
 // Sub at END of segment (null = no sub / game ends)
 const SUBS = [
-  { off1:'Georgie',                           on1:'Lacey',                            atMin:'10', count:1 },
-  { off3:['Arrabella','Eloise S','Neve'],     on3:['Eloise P','Ella S','Charli'],     atMin:'20', count:3 },
-  { off2:['Ella','Isla'],                     on2:['Georgie','Neve'],                 atMin:'30', count:2,
-    htMid:true, gkSwap:'Lacey → Outfield  ·  Gemima → GK' },
-  { off2:['Lacey','Harper'],                  on2:['Arrabella','Eloise S'],           atMin:'40', count:2 },
+  { off1:'Zhana',    on1:'Charli',   atMin:'5',  count:1 },
+  { off1:'Georgie',  on1:'Ella S',   atMin:'10', count:1 },
+  { off1:'Holly',    on1:'Eloise S', atMin:'15', count:1 },
+  { off1:'Neve',     on1:'Zhana',    atMin:'20', count:1 },
+  { off1:'Ella',     on1:'Georgie',  atMin:'HT', count:1,
+    htMid:true, gkSwap:'Arrabella → GK  ·  Lacey → outfield ST' },
+  { off1:'Harper',   on1:'Holly',    atMin:'30', count:1 },
+  { off1:'Eloise P', on1:'Neve',     atMin:'35', count:1 },
+  { off1:'Charli',   on1:'Ella',     atMin:'40', count:1 },
+  { off1:'Ella S',   on1:'Harper',   atMin:'45', count:1 },
   null,
 ];
 
 const MINUTES = [
-  { n:'Holly',    m:50, cat:'gk',  note:'GK all H1 · Outfield all H2' },
-  { n:'Gemima',   m:50, cat:'gk',  note:'Outfield all H1 · GK all H2' },
-  { n:'Neve',     m:40, cat:'v30', note:'S1 S2 S4 S5 · CM anchor' },
-  { n:'Harper',   m:40, cat:'v30', note:'S1 S2 S3 S4' },
-  { n:'Arrabella',m:30, cat:'v29', note:'S1 S2 S5 · benches S3+S4' },
-  { n:'Eloise S', m:30, cat:'v29', note:'S1 S2 S5 · benches S3+S4' },
-  { n:'Lacey',    m:30, cat:'v29', note:'S2 S3 S4 · benches S1+S5' },
-  { n:'Georgie',  m:30, cat:'v29', note:'S1 S4 S5 · benches S2+S3' },
-  { n:'Ella',     m:30, cat:'v29', note:'S1 S2 S3 · benches S4+S5' },
-  { n:'Isla',     m:30, cat:'v29', note:'S1 S2 S3 · benches S4+S5' },
-  { n:'Eloise P', m:30, cat:'v29', note:'S3 S4 S5 · benches S1+S2' },
-  { n:'Ella S',   m:30, cat:'v29', note:'S3 S4 S5 · benches S1+S2' },
-  { n:'Charli',   m:30, cat:'v29', note:'S3 S4 S5 · benches S1+S2' },
+  { n:'Lacey',    m:50, cat:'gk',  note:'GK all H1 · Outfield ST all H2' },
+  { n:'Arrabella',m:50, cat:'gk',  note:'Outfield ST all H1 · GK all H2' },
+  { n:'Eloise P', m:35, cat:'v30', note:'On 0–35' },
+  { n:'Georgie',  m:35, cat:'v30', note:'On 0–10, 25–50' },
+  { n:'Neve',     m:35, cat:'v30', note:'On 0–20, 35–50 · CM anchor' },
+  { n:'Holly',    m:35, cat:'v30', note:'On 0–15, 30–50' },
+  { n:'Zhana',    m:35, cat:'v30', note:'On 0–5, 20–50' },
+  { n:'Ella',     m:35, cat:'v30', note:'On 0–25, 40–50' },
+  { n:'Harper',   m:35, cat:'v30', note:'On 0–30, 45–50' },
+  { n:'Charli',   m:35, cat:'v30', note:'On 5–40' },
+  { n:'Ella S',   m:35, cat:'v30', note:'On 10–45' },
+  { n:'Eloise S', m:35, cat:'v30', note:'On 15–50' },
 ];
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
@@ -315,25 +334,25 @@ function renderRotation() {
   const sub = SUBS[activeSeg];
 
   // GK outfield label
-  const gkOutfield = s.half === 1 ? 'Gemima' : 'Holly';
+  const gkOutfield = s.half === 1 ? 'Arrabella' : 'Lacey';
 
   // Time bar
   let html = `<div class="time-bar">
     <div>
       <div class="time-seg">${s.key} <span style="color:#64748b;font-size:14px;font-weight:500">· ${s.time} min</span></div>
-      <div class="time-meta">Half ${s.half} · ${s.dur} min · bench = 4</div>
+      <div class="time-meta">Half ${s.half} · ${s.dur} min · bench = 3</div>
     </div>
     <div class="sub-count-badge">
       <div class="sub-count-num">${activeSeg+1}</div>
-      <div class="sub-count-label">of 5</div>
+      <div class="sub-count-label">of 10</div>
     </div>
   </div>`;
 
-  // HT mid-segment amber banner
-  if (s.htMid) {
-    html += `<div style="background:#1c1400;border:1px solid #f59e0b;border-radius:8px;padding:8px 14px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
-      <span style="font-size:14px;">⚡</span>
-      <span style="font-size:12px;font-weight:700;color:#f59e0b;">Half time at 25 min — GK swap mid-segment · Lacey → Outfield · Gemima → GK</span>
+  // HT done pill on S6+
+  if (s.htBefore) {
+    html += `<div style="background:#1c1400;border:1px solid #78350f;border-radius:8px;padding:8px 14px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+      <span style="font-size:14px;">✅</span>
+      <span style="font-size:12px;font-weight:700;color:#f59e0b;">Half time done — Arrabella in goal · Lacey at ST</span>
     </div>`;
   }
 
@@ -343,7 +362,7 @@ function renderRotation() {
     <div class="player-list">
       <span class="p-tag gk-tag">${s.gk}</span>
       <span class="p-tag field" style="color:#94a3b8;font-size:12px;margin-left:4px;">
-        ${gkOutfield} playing outfield ↗
+        ${gkOutfield} at ST — outfield ↗
       </span>
     </div>
   </div>`;
@@ -361,7 +380,7 @@ function renderRotation() {
 
   // Bench
   html += `<div class="card">
-    <div class="card-head"><span>Bench (4)</span></div>
+    <div class="card-head"><span>Bench (3)</span></div>
     <div class="player-list">
       ${bench.map(n => `<span class="p-tag bench">${n}</span>`).join('')}
     </div>
@@ -388,12 +407,12 @@ function renderRotation() {
     const headClass = sub.htMid ? 'sub-card-head ht' : 'sub-card-head';
     html += `<div class="${cardClass}">
       <div class="${headClass}">
-        <span>${sub.htMid ? '⚡ Sub + GK swap at end of '+s.key : sub.count+' sub'+(sub.count>1?'s':'')+' at end of '+s.key}</span>
+        <span>${sub.htMid ? '⚡ AT HALF TIME — sub + GK swap' : sub.count+' sub'+(sub.count>1?'s':'')+' at end of '+s.key}</span>
         <span class="sub-time ${sub.htMid?'ht':''}">${sub.atMin} min</span>
       </div>`;
     if (sub.htMid) {
       html += `<div style="padding:4px 14px 2px;font-size:11px;color:#f59e0b;font-weight:600;">
-        ⚠ Half time at 25 min — GK swap mid-segment</div>`;
+        Blow whistle at 25 min · do the sub · swap GKs · restart</div>`;
     }
     pairs.forEach(([off,on]) => {
       html += `<div class="sub-row">
@@ -424,9 +443,9 @@ function renderRotation() {
 function renderSubs() {
   let html = `<div class="subs-wrap">`;
   html += `<div class="subs-intro">
-    <strong>4 sub windows.</strong> Subs happen at 10, 20, 30 and 40 min.
-    Bench stays at 4 the entire game. Neve + Harper get <strong>40 min</strong>.
-    Everyone else gets <strong>30 min</strong>. GKs earn <strong>50 min</strong>.
+    <strong>1 sub every 5 minutes.</strong> 9 sub windows. Bench stays at 3 the whole game.
+    Every regular gets <strong>exactly 35 min</strong> — perfectly equal.
+    GKs (Lacey + Arrabella) get <strong>50 min</strong>: one half in goal, one half at ST.
   </div>`;
 
   function subPairsAll(sub) {
@@ -444,7 +463,7 @@ function renderSubs() {
     html += `<div class="sub-event">
       <div class="ev-time-col">
         <div class="ev-time-num">${sub.atMin}</div>
-        <div class="ev-time-unit">MIN</div>
+        <div class="ev-time-unit">${sub.atMin==='HT'?'25 MIN':'MIN'}</div>
       </div>
       <div class="ev-body">
         <div class="ev-label">${sub.count} sub${sub.count>1?'s':''}${sub.htMid?' · ⚡ HT mid-segment':''}</div>`;
@@ -483,11 +502,10 @@ function renderMinutes() {
   html += `</div>`;
 
   html += `<div class="mins-note">
-    <strong>Neve + Harper:</strong> 40 min — bench one segment each as the two 40-min anchor players.<br><br>
-    <strong>Everyone else:</strong> 30 min — bench two consecutive segments each.<br><br>
-    <strong>Arrabella:</strong> benches S3+S4 so she gets a full 20-min H1 run before resting.<br><br>
-    <strong>GKs Holly + Gemima:</strong> 50 min each — Holly GK all H1, outfield all H2; Gemima outfield H1, GK all H2.<br><br>
-    <strong>Gap:</strong> 10 min between Neve/Harper and the 30-min group. Unavoidable with bench=4 and 11 regulars.
+    <strong>Everyone gets exactly 35 minutes.</strong> Each regular benches one 15-min stint (3 segments).<br><br>
+    <strong>Lacey + Arrabella (GKs):</strong> 50 min — one half in goal, the other at ST.<br><br>
+    <strong>Neve:</strong> chip shows LB when she returns at 35 min — coach swaps her with Zhana to restore CM.<br><br>
+    <strong>Gap: zero.</strong> The 5-min segment structure is the only one that divides perfectly.
   </div>`;
   return html;
 }
