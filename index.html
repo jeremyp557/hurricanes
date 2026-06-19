@@ -385,15 +385,22 @@ function renderRotation() {
     const pairs = subPairs(sub);
     const cardClass = sub.htMid ? 'sub-card ht' : 'sub-card';
     const headClass = sub.htMid ? 'sub-card-head ht' : 'sub-card-head';
-    html += `<div class="${cardClass}">
-      <div class="${headClass}">
-        <span>${sub.htMid ? '⚡ AT HALF TIME — sub + GK swap' : sub.count+' sub'+(sub.count>1?'s':'')+' at end of '+s.key}</span>
-        <span class="sub-time ${sub.htMid?'ht':''}">${sub.atMin} min</span>
-      </div>`;
+    html += `<div class="${cardClass}">`;
+    // Half-time GK swap happens FIRST, mid-segment at 25 min — keepers only
     if (sub.htMid) {
-      html += `<div style="padding:4px 14px 2px;font-size:11px;color:#f59e0b;font-weight:600;">
-        Blow whistle at 25 min · do the sub · swap GKs · restart</div>`;
+      html += `<div class="sub-card-head ht">
+        <span>🥅 HALF TIME — GK swap only</span>
+        <span class="sub-time ht">25 min</span>
+      </div>
+      <div style="padding:6px 14px 2px;font-size:11px;color:#f59e0b;font-weight:600;">
+        At 25 min: swap keepers. No outfield players change here.</div>
+      <div class="gk-swap-row">${sub.gkSwap}</div>`;
     }
+    // Outfield player subs happen at the END of the segment (30 min)
+    html += `<div class="${headClass}" style="${sub.htMid?'margin-top:10px;':''}">
+        <span>${sub.count+' player sub'+(sub.count>1?'s':'')+' at end of '+s.key}</span>
+        <span class="sub-time">${sub.atMin} min</span>
+      </div>`;
     pairs.forEach(([off,on]) => {
       html += `<div class="sub-row">
         <div class="sub-off">← ${off}</div>
@@ -401,9 +408,6 @@ function renderRotation() {
         <div class="sub-on">→ ${on}</div>
       </div>`;
     });
-    if (sub.htMid) {
-      html += `<div class="gk-swap-row">🥅 ${sub.gkSwap}</div>`;
-    }
     html += `</div>`;
   }
 
@@ -440,13 +444,26 @@ function renderSubs() {
   SUBS.forEach((sub, i) => {
     if (!sub) return;
     const pairs = subPairsAll(sub);
+    // For the half-time segment, show the GK swap as its own 25-min event first
+    if (sub.htMid) {
+      html += `<div class="sub-event">
+        <div class="ev-time-col">
+          <div class="ev-time-num">25</div>
+          <div class="ev-time-unit">HT · MIN</div>
+        </div>
+        <div class="ev-body">
+          <div class="ev-label">🥅 GK swap only — no player change</div>
+          <div class="ev-note">${sub.gkSwap}</div>
+        </div>
+      </div>`;
+    }
     html += `<div class="sub-event">
       <div class="ev-time-col">
         <div class="ev-time-num">${sub.atMin}</div>
-        <div class="ev-time-unit">${sub.atMin==='HT'?'25 MIN':'MIN'}</div>
+        <div class="ev-time-unit">MIN</div>
       </div>
       <div class="ev-body">
-        <div class="ev-label">${sub.count} sub${sub.count>1?'s':''}${sub.htMid?' · ⚡ HT mid-segment':''}</div>`;
+        <div class="ev-label">${sub.count} player sub${sub.count>1?'s':''}</div>`;
     pairs.forEach(([off,on]) => {
       html += `<div class="ev-pair">
           <span class="ev-off">← ${off}</span>
@@ -454,9 +471,6 @@ function renderSubs() {
           <span class="ev-on">${on}</span>
         </div>`;
     });
-    if (sub.htMid) {
-      html += `<div class="ev-note">🥅 ${sub.gkSwap}</div>`;
-    }
     html += `</div></div>`;
   });
 
