@@ -26,6 +26,32 @@
     background: rgba(0,0,0,0.25); border-radius: 8px; padding: 4px 10px;
     font-size: 11px; font-weight: 700; letter-spacing: 1px; color: #a7f3d0;
   }
+
+  /* ── Pitch formation view ── */
+  .pitch-wrap { padding:0 2px 8px; }
+  .pitch-toggle { display:flex; gap:6px; margin-bottom:10px; }
+  .pt-btn { flex:1; background:#16203a; border:1px solid #283047; color:#94a3b8; border-radius:9px; padding:9px 4px; font-size:12px; font-weight:800; letter-spacing:0.4px; }
+  .pt-btn.active { background:linear-gradient(135deg,#7c3aed,#4f46e5); color:#fff; border-color:transparent; }
+  .pitch { position:relative; width:100%; aspect-ratio:7/10; border-radius:14px; overflow:hidden;
+    background:repeating-linear-gradient(0deg,#2f9e44 0,#2f9e44 10%,#37b24d 10%,#37b24d 20%);
+    border:1px solid #14532d; box-shadow:inset 0 0 0 2px rgba(255,255,255,0.12); }
+  .pitch-line { position:absolute; background:rgba(255,255,255,0.45); }
+  .pl-half { left:0; right:0; top:50%; height:2px; }
+  .pl-circle { left:50%; top:50%; width:34%; aspect-ratio:1; border:2px solid rgba(255,255,255,0.45); border-radius:50%; transform:translate(-50%,-50%); background:transparent; }
+  .pl-box-top { left:28%; right:28%; top:0; height:13%; border:2px solid rgba(255,255,255,0.4); border-top:none; }
+  .pl-box-bot { left:28%; right:28%; bottom:0; height:13%; border:2px solid rgba(255,255,255,0.4); border-bottom:none; }
+  .pp { position:absolute; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:3px; width:80px; }
+  .pp-bubble { width:62px; height:62px; border-radius:50%; background:#1971c2; border:3px solid #1864ab;
+    display:flex; align-items:center; justify-content:center; text-align:center; color:#fff; font-size:12.5px; font-weight:800; line-height:1.05; box-shadow:0 2px 6px rgba(0,0,0,0.35); padding:2px; }
+  .pp-bubble.gk { background:#e8590c; border-color:#d9480f; }
+  .pp-bubble.gkout { background:#1971c2; border-color:#f59e0b; }
+  .pp-pos { background:#fff; color:#0f172a; font-size:9px; font-weight:800; letter-spacing:0.5px; padding:1px 7px; border-radius:8px; }
+  .pitch-bench { margin-top:10px; }
+  .pitch-bench-lbl { font-size:10px; font-weight:800; letter-spacing:1.2px; color:#64748b; text-transform:uppercase; margin:0 2px 7px; }
+  .pb-row { display:flex; flex-wrap:wrap; gap:7px; }
+  .pb-chip { display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .pb-bubble { width:46px; height:46px; border-radius:50%; background:#1c2638; border:2px solid #2a3a55; display:flex; align-items:center; justify-content:center; text-align:center; color:#cbd5e1; font-size:10px; font-weight:700; line-height:1.05; padding:2px; }
+  .pitch-cap { text-align:center; font-size:11px; color:#64748b; font-weight:600; margin-top:8px; }
   .nav-tabs {
     display: flex; background: #0f172a; border-bottom: 1px solid #1e293b; flex-shrink: 0;
   }
@@ -205,7 +231,7 @@
   <div class="hdr-row">
     <div>
       <div class="hdr-title">Rotation Planner</div>
-      <div class="hdr-sub">13 players · 9 on field · 2×25 min · bench = 4</div>
+      <div class="hdr-sub">12 players · 9 on field · 2×25 min · bench = 3</div>
     </div>
     <div class="hdr-badge">12 SEGMENTS</div>
   </div>
@@ -213,6 +239,7 @@
 
 <div class="nav-tabs">
   <button class="nav-btn active" id="navRotation" onclick="setTab('rotation')">⚽ Rotation</button>
+  <button class="nav-btn" id="navPitch" onclick="setTab('pitch')">📋 Pitch</button>
   <button class="nav-btn" id="navSubs" onclick="setTab('subs')">🔄 All Subs</button>
   <button class="nav-btn" id="navMins" onclick="setTab('minutes')">⏱ Minutes</button>
 </div>
@@ -222,6 +249,7 @@
 
 <div class="bottom-nav">
   <button class="nav-btn active" id="bnavRotation" onclick="setTab('rotation')">⚽ Rotation</button>
+  <button class="nav-btn" id="bnavPitch" onclick="setTab('pitch')">📋 Pitch</button>
   <button class="nav-btn" id="bnavSubs" onclick="setTab('subs')">🔄 All Subs</button>
   <button class="nav-btn" id="bnavMins" onclick="setTab('minutes')">⏱ Minutes</button>
 </div>
@@ -251,28 +279,28 @@ const SEGS = [
 // Arrabella: off at 17 min (Sub 4), returns at 37 min (Sub 9) — Option B fix.
 // Neve starts CM as required.
 const FIELD = [
-  [{n:'Eloise P',p:'LB',c:'def'},{n:'Ella S',  p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Holly',  p:'LF',c:'fwd'},{n:'Gemima', p:'CF',c:'fwd'},{n:'Ella',     p:'RF',c:'fwd'},{n:'Eloise S',p:'ST',c:'st'},{n:'Zhana', p:'ST',c:'st'}], // S1
-  [{n:'Eloise P',p:'LB',c:'def'},{n:'Ella S',  p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Lacey',  p:'LF',c:'fwd'},{n:'Isla',   p:'CF',c:'fwd'},{n:'Ella',     p:'RF',c:'fwd'},{n:'Eloise S',p:'ST',c:'st'},{n:'Zhana', p:'ST',c:'st'}], // S2  Gemima→Isla · Holly→Lacey
-  [{n:'Eloise P',p:'LB',c:'def'},{n:'Ella S',  p:'RB',c:'def'},{n:'Charli',p:'CM',c:'cm'},{n:'Lacey',  p:'LF',c:'fwd'},{n:'Isla',   p:'CF',c:'fwd'},{n:'Arrabella',p:'RF',c:'fwd'},{n:'Eloise S',p:'ST',c:'st'},{n:'Zhana', p:'ST',c:'st'}], // S3  Ella→Arrabella · Neve→Charli · HT mid-seg
-  [{n:'Holly',   p:'LB',c:'def'},{n:'Gemima',  p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Lacey',  p:'LF',c:'fwd'},{n:'Isla',   p:'CF',c:'fwd'},{n:'Arrabella',p:'RF',c:'fwd'},{n:'Charli',  p:'ST',c:'st'},{n:'Harper',p:'ST',c:'st'}], // S4  Ella S→Holly · Eloise P→Gemima · Eloise S→Neve · GK swap
-  [{n:'Holly',   p:'LB',c:'def'},{n:'Gemima',  p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Eloise P',p:'LF',c:'fwd'},{n:'Ella',  p:'CF',c:'fwd'},{n:'Arrabella',p:'RF',c:'fwd'},{n:'Charli',  p:'ST',c:'st'},{n:'Harper',p:'ST',c:'st'}], // S5  Isla→Eloise P · Lacey→Ella
+  [{n:'Eloise P',p:'LB',c:'def'},{n:'Ella S',  p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Lacey',  p:'LF',c:'fwd'},{n:'Gemima', p:'CF',c:'fwd'},{n:'Ella',   p:'RF',c:'fwd'},{n:'Eloise S',p:'ST',c:'st'},{n:'Zhana', p:'ST',c:'st'}], // S1
+  [{n:'Eloise P',p:'LB',c:'def'},{n:'Ella S',  p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Lacey',  p:'LF',c:'fwd'},{n:'Charli', p:'CF',c:'fwd'},{n:'Holly',  p:'RF',c:'fwd'},{n:'Eloise S',p:'ST',c:'st'},{n:'Zhana', p:'ST',c:'st'}], // S2  Ella→Holly · Gemima→Charli
+  [{n:'Eloise P',p:'LB',c:'def'},{n:'Arrabella',p:'RB',c:'def'},{n:'Gemima',p:'CM',c:'cm'},{n:'Lacey', p:'LF',c:'fwd'},{n:'Charli', p:'CF',c:'fwd'},{n:'Holly',  p:'RF',c:'fwd'},{n:'Eloise S',p:'ST',c:'st'},{n:'Zhana', p:'ST',c:'st'}], // S3  Ella S→Arrabella · Neve→Gemima · HT mid-seg
+  [{n:'Gemima', p:'LB',c:'def'},{n:'Arrabella',p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Lacey',  p:'LF',c:'fwd'},{n:'Charli', p:'CF',c:'fwd'},{n:'Holly',  p:'RF',c:'fwd'},{n:'Ella',    p:'ST',c:'st'},{n:'Harper',p:'ST',c:'st'}], // S4  Eloise P→Gemima · Eloise S→Ella · GK swap · (Neve back to CM)
+  [{n:'Gemima', p:'LB',c:'def'},{n:'Arrabella',p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Eloise P',p:'LF',c:'fwd'},{n:'Charli',p:'CF',c:'fwd'},{n:'Ella S',  p:'RF',c:'fwd'},{n:'Ella',    p:'ST',c:'st'},{n:'Harper',p:'ST',c:'st'}], // S5  Holly→Ella S · Lacey→Eloise P
 ];
 
 const BENCH = [
-  ['Arrabella','Charli','Isla','Lacey'],     // S1
-  ['Arrabella','Charli','Gemima','Holly'],   // S2
-  ['Ella','Gemima','Holly','Neve'],          // S3
-  ['Ella','Ella S','Eloise P','Eloise S'],   // S4
-  ['Ella S','Eloise S','Isla','Lacey'],      // S5
+  ['Arrabella','Charli','Holly'],     // S1
+  ['Arrabella','Ella','Gemima'],      // S2
+  ['Ella','Ella S','Neve'],           // S3
+  ['Ella S','Eloise P','Eloise S'],   // S4
+  ['Eloise S','Holly','Lacey'],       // S5
 ];
 
 // Sub at END of segment (null = no sub / game ends)
 const SUBS = [
-  { off2:['Gemima','Holly'],            on2:['Isla','Lacey'],             atMin:'10', count:2 },
-  { off2:['Ella','Neve'],               on2:['Arrabella','Charli'],       atMin:'20', count:2 },
-  { off3:['Ella S','Eloise P','Eloise S'],on3:['Gemima','Holly','Neve'],  atMin:'30', count:3,
+  { off2:['Ella','Gemima'],        on2:['Charli','Holly'],         atMin:'10', count:2 },
+  { off2:['Ella S','Neve'],        on2:['Arrabella','Gemima'],     atMin:'20', count:2 },
+  { off2:['Eloise P','Eloise S'],  on2:['Ella','Neve'],            atMin:'30', count:2,
     htMid:true, gkSwap:'Zhana → GK  ·  Harper → outfield ST' },
-  { off2:['Isla','Lacey'],              on2:['Ella','Eloise P'],          atMin:'40', count:2 },
+  { off2:['Holly','Lacey'],        on2:['Ella S','Eloise P'],      atMin:'40', count:2 },
   null,
 ];
 
@@ -281,20 +309,21 @@ const MINUTES = [
   { n:'Zhana',    m:50, cat:'gk',  note:'Outfield ST all H1 · GK all H2' },
   { n:'Neve',     m:40, cat:'v30', note:'S1 S2 S4 S5 · CM anchor' },
   { n:'Eloise P', m:40, cat:'v30', note:'S1 S2 S3 S5' },
+  { n:'Gemima',   m:40, cat:'v30', note:'S1 S3 S4 S5' },
+  { n:'Charli',   m:40, cat:'v30', note:'S2 S3 S4 S5' },
+  { n:'Lacey',    m:40, cat:'v30', note:'S1 S2 S3 S4' },
   { n:'Arrabella',m:30, cat:'v29', note:'S3 S4 S5' },
-  { n:'Charli',   m:30, cat:'v29', note:'S3 S4 S5' },
-  { n:'Ella',     m:30, cat:'v29', note:'S1 S2 S5' },
-  { n:'Ella S',   m:30, cat:'v29', note:'S1 S2 S3' },
+  { n:'Ella',     m:30, cat:'v29', note:'S1 S4 S5' },
+  { n:'Ella S',   m:30, cat:'v29', note:'S1 S2 S5' },
   { n:'Eloise S', m:30, cat:'v29', note:'S1 S2 S3' },
-  { n:'Gemima',   m:30, cat:'v29', note:'S1 S4 S5' },
-  { n:'Holly',    m:30, cat:'v29', note:'S1 S4 S5' },
-  { n:'Isla',     m:30, cat:'v29', note:'S2 S3 S4' },
-  { n:'Lacey',    m:30, cat:'v29', note:'S2 S3 S4' },
+  { n:'Holly',    m:30, cat:'v29', note:'S2 S3 S4' },
 ];
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
 let activeSeg = 0;
 let activeTab = 'rotation';
+const GK_H1_OUT = 'Zhana';
+const GK_H2_OUT = 'Harper';
 
 // ─── RENDER ──────────────────────────────────────────────────────────────────
 function renderSegTabs() {
@@ -361,7 +390,7 @@ function renderRotation() {
 
   // Bench
   html += `<div class="card">
-    <div class="card-head"><span>Bench (4)</span></div>
+    <div class="card-head"><span>Bench (3)</span></div>
     <div class="player-list">
       ${bench.map(n => `<span class="p-tag bench">${n}</span>`).join('')}
     </div>
@@ -425,12 +454,78 @@ function renderRotation() {
   return html;
 }
 
+// pitch view state: which segment to show on the field
+let pitchSeg = 0;
+// coordinates per position slot: {x%, y%} on a vertical pitch (GK bottom, attack top)
+const PITCH_XY = {
+  LB:{x:25,y:72}, RB:{x:75,y:72}, CM:{x:50,y:55},
+  LF:{x:22,y:36}, CF:{x:50,y:34}, RF:{x:78,y:36},
+  ST:{x:33,y:14}, ST2:{x:67,y:14}
+};
+
+function renderPitch() {
+  const s = SEGS[pitchSeg];
+  const field = FIELD[pitchSeg];
+  const bench = BENCH[pitchSeg];
+  const gkOutfield = s.half === 1 ? GK_H1_OUT : GK_H2_OUT;
+
+  // two ST chips -> assign ST / ST2 slots in order
+  let stCount = 0;
+  let bubbles = field.map(f => {
+    let slot = f.p;
+    if (f.p === 'ST') { slot = stCount === 0 ? 'ST' : 'ST2'; stCount++; }
+    const xy = PITCH_XY[slot] || {x:50,y:50};
+    const isGkOut = f.n === gkOutfield;
+    return `<div class="pp" style="left:${xy.x}%;top:${xy.y}%;">
+      <span class="pp-pos">${f.p}</span>
+      <div class="pp-bubble ${isGkOut?'gkout':''}">${f.n}</div>
+    </div>`;
+  }).join('');
+
+  // GK in goal at the bottom
+  bubbles += `<div class="pp" style="left:50%;top:90%;">
+    <span class="pp-pos">GK</span>
+    <div class="pp-bubble gk">${s.gk}</div>
+  </div>`;
+
+  const benchChips = bench.map(n =>
+    `<div class="pb-chip"><div class="pb-bubble">${n}</div></div>`).join('');
+
+  let h = `<div class="pitch-wrap">`;
+  // half / segment toggle
+  h += `<div class="pitch-toggle">`;
+  SEGS.forEach((sg,i) => {
+    h += `<button class="pt-btn ${i===pitchSeg?'active':''}" onclick="setPitchSeg(${i})">${sg.key}<br><span style="font-size:9px;opacity:0.8;">${sg.time}</span></button>`;
+  });
+  h += `</div>`;
+
+  h += `<div class="pitch">
+    <div class="pitch-line pl-half"></div>
+    <div class="pitch-line pl-circle"></div>
+    <div class="pitch-line pl-box-top"></div>
+    <div class="pitch-line pl-box-bot"></div>
+    ${bubbles}
+  </div>`;
+
+  h += `<div class="pitch-cap">Half ${s.half} · ${s.time} min · ⚡ gold ring = keeper playing outfield (${gkOutfield})</div>`;
+
+  h += `<div class="pitch-bench">
+    <div class="pitch-bench-lbl">On the bench (${bench.length})</div>
+    <div class="pb-row">${benchChips}</div>
+  </div>`;
+
+  h += `</div>`;
+  return h;
+}
+
+function setPitchSeg(i) { pitchSeg = i; render(); }
+
 function renderSubs() {
   let html = `<div class="subs-wrap">`;
   html += `<div class="subs-intro">
-    <strong>4 sub windows.</strong> Subs at 10, 20, 30 and 40 min. Bench stays at 4.
+    <strong>4 sub windows.</strong> Subs at 10, 20, 30 and 40 min — two each, all clean. Bench stays at 3.
     Half time GK swap mid-segment at 25 min.
-    <strong>Neve + Eloise P get 40 min</strong>, everyone else <strong>30 min</strong>, GKs <strong>50 min</strong>.
+    <strong>Five players get 40 min, five get 30 min</strong>, GKs <strong>50 min</strong>.
   </div>`;
 
   function subPairsAll(sub) {
@@ -497,10 +592,10 @@ function renderMinutes() {
   html += `</div>`;
 
   html += `<div class="mins-note">
-    <strong>40 min:</strong> Neve (CM anchor) + Eloise P — each benches one segment.<br><br>
-    <strong>30 min:</strong> everyone else — three segments on, two off.<br><br>
+    <strong>40 min:</strong> Neve (CM anchor), Eloise P, Gemima, Charli, Lacey — each benches one segment.<br><br>
+    <strong>30 min:</strong> Arrabella, Ella, Ella S, Eloise S, Holly — each benches two.<br><br>
     <strong>GKs Harper + Zhana:</strong> 50 min — Harper goal H1 then ST H2; Zhana ST H1 then goal H2.<br><br>
-    <strong>10-min gap</strong> between the 40s and 30s is unavoidable with bench=4 and 11 regulars. Rotate the second 40-min spot (Eloise P this week) to even it out across the season. When Neve sits in S3, Charli covers CM; coach shifts Neve back on her return.
+    <strong>10-min gap</strong> between the groups is unavoidable with bench=3 and 10 regulars. Rotate which five get 40 min week to week. When Neve sits in S3, Gemima covers CM; coach shifts Neve back to CM on her return at 30 min.
   </div>`;
   return html;
 }
@@ -513,6 +608,7 @@ function render() {
 
   const mc = document.getElementById('mainContent');
   if (activeTab === 'rotation') mc.innerHTML = renderRotation();
+  else if (activeTab === 'pitch') mc.innerHTML = renderPitch();
   else if (activeTab === 'subs') mc.innerHTML = renderSubs();
   else mc.innerHTML = renderMinutes();
 }
@@ -525,7 +621,7 @@ function setSeg(i) {
 
 function setTab(t) {
   activeTab = t;
-  ['Rotation','Subs','Mins'].forEach(x => {
+  ['Rotation','Pitch','Subs','Mins'].forEach(x => {
     const key = x==='Mins'?'minutes':x.toLowerCase();
     const el = document.getElementById('nav'+x);
     const bel = document.getElementById('bnav'+x);
