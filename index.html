@@ -237,9 +237,9 @@
   <div class="hdr-row">
     <div>
       <div class="hdr-title">Rotation Planner</div>
-      <div class="hdr-sub" id="hdrSub">13 players · 9 on field · 2×25 min · bench = 4</div>
+      <div class="hdr-sub" id="hdrSub">13 players · 9 on field · 2×25 min · Arrabella full 1st half</div>
     </div>
-    <div class="hdr-badge" id="hdrBadge">BENCH 4</div>
+    <div class="hdr-badge" id="hdrBadge">6 SEGMENTS</div>
   </div>
 </div>
 
@@ -268,54 +268,58 @@
 
 // Shared segment shape (same for both plans): 5 x 10 min, GK Neve H1 / Ella S H2, HT mid-S3
 const SEGS = [
-  { key:'S1', time:'0 – 10',  dur:10, half:1, gk:'Neve',   gkNote:'GK · H1', htBefore:false, htMid:false },
-  { key:'S2', time:'10 – 20', dur:10, half:1, gk:'Neve',   gkNote:'GK · H1', htBefore:false, htMid:false },
-  { key:'S3', time:'20 – 30', dur:10, half:1, gk:'Neve',   gkNote:'GK · H1', htBefore:false, htMid:true  },
-  { key:'S4', time:'30 – 40', dur:10, half:2, gk:'Ella S', gkNote:'GK · H2', htBefore:false, htMid:false },
-  { key:'S5', time:'40 – 50', dur:10, half:2, gk:'Ella S', gkNote:'GK · H2', htBefore:false, htMid:false },
+  { key:'S1', time:'0 – 10',  dur:10, half:1, gk:'Eloise S', gkNote:'GK · H1', htBefore:false, htMid:false },
+  { key:'S2', time:'10 – 20', dur:10, half:1, gk:'Eloise S', gkNote:'GK · H1', htBefore:false, htMid:false },
+  { key:'S3', time:'20 – 25', dur:5,  half:1, gk:'Eloise S', gkNote:'GK · H1', htBefore:false, htMid:false },
+  { key:'S4', time:'25 – 30', dur:5,  half:2, gk:'Charli',   gkNote:'GK · H2', htBefore:true,  htMid:false },
+  { key:'S5', time:'30 – 40', dur:10, half:2, gk:'Charli',   gkNote:'GK · H2', htBefore:false, htMid:false },
+  { key:'S6', time:'40 – 50', dur:10, half:2, gk:'Charli',   gkNote:'GK · H2', htBefore:false, htMid:false },
 ];
 
 // ══ PLAN A — Isla IN · 12 players · bench 3 ══════════════════════════════════
 const PLAN_A = {
-  label:'Full squad', sub:'13 players · bench 4', badge:'BENCH 4',
+  label:'Full squad', sub:'13 players · Arrabella full 1st half', badge:'6 SEGMENTS',
   field:[
-    [{n:'Eloise P',p:'LB',c:'def'},{n:'Zhana',  p:'RB',c:'def'},{n:'Holly', p:'CM',c:'cm'},{n:'Charli', p:'LF',c:'fwd'},{n:'Isla',   p:'CF',c:'fwd'},{n:'Ella',   p:'RF',c:'fwd'},{n:'Georgie', p:'ST',c:'st'},{n:'Ella S',  p:'ST',c:'st'}], // S1
-    [{n:'Eloise P',p:'LB',c:'def'},{n:'Lacey',  p:'RB',c:'def'},{n:'Holly', p:'CM',c:'cm'},{n:'Charli', p:'LF',c:'fwd'},{n:'Isla',   p:'CF',c:'fwd'},{n:'Ella',   p:'RF',c:'fwd'},{n:'Arrabella',p:'ST',c:'st'},{n:'Ella S', p:'ST',c:'st'}], // S2  Georgie→Arrabella · Zhana→Lacey
-    [{n:'Eloise S',p:'LB',c:'def'},{n:'Lacey',  p:'RB',c:'def'},{n:'Holly', p:'CM',c:'cm'},{n:'Charli', p:'LF',c:'fwd'},{n:'Isla',   p:'CF',c:'fwd'},{n:'Gemima', p:'RF',c:'fwd'},{n:'Arrabella',p:'ST',c:'st'},{n:'Ella S', p:'ST',c:'st'}], // S3  Eloise P→Eloise S · Ella→Gemima · HT mid-seg
-    [{n:'Eloise S',p:'LB',c:'def'},{n:'Lacey',  p:'RB',c:'def'},{n:'Neve',  p:'CM',c:'cm'},{n:'Zhana',  p:'LF',c:'fwd'},{n:'Isla',   p:'CF',c:'fwd'},{n:'Georgie',p:'RF',c:'fwd'},{n:'Arrabella',p:'ST',c:'st'},{n:'Gemima', p:'ST',c:'st'}], // S4  Charli→Zhana · Holly→Georgie · GK swap · Neve to CM · Gemima to ST
-    [{n:'Eloise S',p:'LB',c:'def'},{n:'Eloise P',p:'RB',c:'def'},{n:'Neve', p:'CM',c:'cm'},{n:'Zhana',  p:'LF',c:'fwd'},{n:'Ella',   p:'CF',c:'fwd'},{n:'Georgie',p:'RF',c:'fwd'},{n:'Lacey',   p:'ST',c:'st'},{n:'Gemima', p:'ST',c:'st'}], // S5  Isla→Ella · Arrabella→Eloise P (Lacey pushes to ST, EP into RB)
+    [{n:'Eloise P',p:'LB',c:'def'},{n:'Georgie',p:'RB',c:'def'},{n:'Neve', p:'CM',c:'cm'},{n:'Ella',  p:'LF',c:'fwd'},{n:'Isla', p:'CF',c:'fwd'},{n:'Zhana', p:'RF',c:'fwd'},{n:'Arrabella',p:'ST',c:'st'},{n:'Charli',  p:'ST',c:'st'}], // S1  Neve starts at CM · Georgie RB · Zhana RF
+    [{n:'Eloise P',p:'LB',c:'def'},{n:'Ella',   p:'RB',c:'def'},{n:'Neve', p:'CM',c:'cm'},{n:'Holly', p:'LF',c:'fwd'},{n:'Isla', p:'CF',c:'fwd'},{n:'Gemima',p:'RF',c:'fwd'},{n:'Arrabella',p:'ST',c:'st'},{n:'Charli',  p:'ST',c:'st'}], // S2  Georgie→Holly · Zhana→Gemima (Ella shifts LF→RB)
+    [{n:'Eloise P',p:'LB',c:'def'},{n:'Ella',   p:'RB',c:'def'},{n:'Neve', p:'CM',c:'cm'},{n:'Lacey', p:'LF',c:'fwd'},{n:'Isla', p:'CF',c:'fwd'},{n:'Ella S',p:'RF',c:'fwd'},{n:'Arrabella',p:'ST',c:'st'},{n:'Charli',  p:'ST',c:'st'}], // S3  Holly→Lacey · Gemima→Ella S · Arrabella's last 5 min
+    [{n:'Eloise P',p:'LB',c:'def'},{n:'Georgie',p:'RB',c:'def'},{n:'Holly',p:'CM',c:'cm'},{n:'Lacey', p:'LF',c:'fwd'},{n:'Zhana',p:'CF',c:'fwd'},{n:'Ella S',p:'RF',c:'fwd'},{n:'Ella',     p:'ST',c:'st'},{n:'Eloise S',p:'ST',c:'st'}], // S4  HALF TIME: Arrabella done · Isla→Zhana(CF) · Neve→Holly at CM · Georgie back to RB · Charli→goal, Eloise S→ST
+    [{n:'Ella S',  p:'LB',c:'def'},{n:'Georgie',p:'RB',c:'def'},{n:'Neve', p:'CM',c:'cm'},{n:'Lacey', p:'LF',c:'fwd'},{n:'Zhana',p:'CF',c:'fwd'},{n:'Gemima',p:'RF',c:'fwd'},{n:'Holly',    p:'ST',c:'st'},{n:'Eloise S',p:'ST',c:'st'}], // S5  Eloise P→Ella S(LB) · Ella→Gemima · Neve back at CM, Holly to ST
+    [{n:'Ella S',  p:'LB',c:'def'},{n:'Georgie',p:'RB',c:'def'},{n:'Holly',p:'CM',c:'cm'},{n:'Zhana', p:'LF',c:'fwd'},{n:'Isla', p:'CF',c:'fwd'},{n:'Gemima',p:'RF',c:'fwd'},{n:'Lacey',    p:'ST',c:'st'},{n:'Eloise S',p:'ST',c:'st'}], // S6  Neve→Isla (Holly back to CM, Zhana to LF, Lacey to ST)
   ],
   bench:[
-    ['Arrabella','Eloise S','Gemima','Lacey'],   // S1
-    ['Eloise S','Gemima','Georgie','Zhana'],     // S2
-    ['Ella','Eloise P','Georgie','Zhana'],       // S3
-    ['Charli','Ella','Eloise P','Holly'],        // S4
-    ['Arrabella','Charli','Holly','Isla'],       // S5
+    ['Ella S','Gemima','Holly','Lacey'],     // S1  bench 4
+    ['Ella S','Georgie','Lacey','Zhana'],    // S2  bench 4
+    ['Gemima','Georgie','Holly','Zhana'],    // S3  bench 4
+    ['Gemima','Isla','Neve'],                // S4  bench 3 — Arrabella has finished
+    ['Ella','Eloise P','Isla'],              // S5
+    ['Ella','Eloise P','Neve'],              // S6
   ],
   subs:[
-    { off2:['Georgie','Zhana'],   on2:['Arrabella','Lacey'],   atMin:'10', count:2 },
-    { off2:['Eloise P','Ella'],   on2:['Eloise S','Gemima'],   atMin:'20', count:2 },
-    { off2:['Charli','Holly'],    on2:['Zhana','Georgie'],     atMin:'30', count:2,
-      htMid:true, gkSwap:'Ella S → GK  ·  Neve → CM (Holly shifts to ST until 30)' },
-    { off2:['Isla','Arrabella'],  on2:['Ella','Eloise P'],     atMin:'40', count:2 },
+    { off2:['Georgie','Zhana'],         on2:['Gemima','Holly'],          atMin:'10', count:2 },
+    { off2:['Gemima','Holly'],          on2:['Ella S','Lacey'],          atMin:'20', count:2 },
+    { off3:['Arrabella','Isla','Neve'], on3:['Georgie','Holly','Zhana'], atMin:'25', count:3,
+      htMid:true, gkSwap:'Charli → GK  ·  Eloise S → outfield ST' },
+    { off2:['Ella','Eloise P'],         on2:['Gemima','Neve'],           atMin:'30', count:2 },
+    { off1:'Neve',                      on1:'Isla',                      atMin:'40', count:1 },
     null,
   ],
   minutes:[
-    { n:'Neve',     m:50, cat:'gk',  note:'GK all H1 · CM all H2 (preferred)' },
-    { n:'Ella S',   m:50, cat:'gk',  note:'Outfield ST all H1 · GK all H2' },
-    { n:'Isla',     m:40, cat:'v30', note:'S1–S4 · CF (central)' },
-    { n:'Lacey',    m:40, cat:'v30', note:'S2–S5 · RB then ST' },
-    { n:'Arrabella',m:30, cat:'v29', note:'S2 S3 S4 · ST every seg' },
-    { n:'Charli',   m:30, cat:'v29', note:'S1 S2 S3 · LF' },
-    { n:'Ella',     m:30, cat:'v29', note:'S1 S2 S5' },
-    { n:'Eloise P', m:30, cat:'v29', note:'S1 S2 S5 · defence only' },
-    { n:'Eloise S', m:30, cat:'v29', note:'S3 S4 S5 · LB' },
-    { n:'Gemima',   m:30, cat:'v29', note:'S3 S4 S5 · RF then ST' },
-    { n:'Georgie',  m:30, cat:'v29', note:'S1 S4 S5' },
-    { n:'Holly',    m:30, cat:'v29', note:'S1 S2 S3 · CM' },
-    { n:'Zhana',    m:30, cat:'v29', note:'S1 S4 S5' },
+    { n:'Eloise S', m:50, cat:'gk',  note:'GK all H1 · Outfield ST all H2' },
+    { n:'Charli',   m:50, cat:'gk',  note:'Outfield ST all H1 · GK all H2' },
+    { n:'Neve',     m:35, cat:'v30', note:'S1 S2 S3 S5 · starts, CM every segment' },
+    { n:'Georgie',  m:35, cat:'v30', note:'S1 S4 S5 S6 · RB every segment' },
+    { n:'Holly',    m:35, cat:'v30', note:'S2 S4 S5 S6 · CM whenever Neve rests' },
+    { n:'Isla',     m:35, cat:'v30', note:'S1 S2 S3 S6 · CF (central)' },
+    { n:'Zhana',    m:35, cat:'v30', note:'S1 S4 S5 S6 · RF / CF / LF — no defence' },
+    { n:'Ella',     m:30, cat:'v29', note:'S1–S4' },
+    { n:'Ella S',   m:30, cat:'v29', note:'S3–S6' },
+    { n:'Eloise P', m:30, cat:'v29', note:'S1–S4 · LB, defence only' },
+    { n:'Gemima',   m:30, cat:'v29', note:'S2 S5 S6 · RF, forward throughout' },
+    { n:'Lacey',    m:30, cat:'v29', note:'S3–S6' },
+    { n:'Arrabella',m:25, cat:'v29', note:'S1 S2 S3 · ST · full 1st half' },
   ],
-  note:'<strong>40 min:</strong> Isla + Lacey — rotate this pair week to week.<br><br><strong>30 min:</strong> everyone else. Eloise P kept to 30 in defence only (returning from illness) with a long mid-game rest.<br><br><strong>Isla:</strong> CF (central) every segment she plays. <strong>Arrabella:</strong> ST every segment. <strong>Gemima:</strong> RF then ST.<br><br><strong>GKs Neve + Ella S:</strong> 50 min — Neve goal H1 then CM; Ella S ST H1 then goal.'
+  note:'<strong>Neve starts</strong> and holds CM for every segment she plays. <strong>Holly</strong> covers CM in exactly the two windows Neve rests (25–30 and 40–50), so the position never changes hands to someone unfamiliar.<br><br><strong>Zhana</strong> is kept out of the back line entirely — RF, then CF, then LF.<br><br><strong>Georgie</strong> plays RB in all four of his segments; <strong>Eloise P</strong> is LB for all four of hers.<br><br><strong>35 min:</strong> Neve, Georgie, Holly, Isla, Zhana. <strong>30 min:</strong> Ella, Ella S, Eloise P, Gemima, Lacey. <strong>Arrabella:</strong> 25 (full 1st half). <strong>GKs:</strong> 50 each.<br><br>Still 10 subs — the minimum — with only the half-time window carrying three.'
 };
 
 // ══ PLAN B — Isla OUT · 11 players · bench 2 ═════════════════════════════════
@@ -369,8 +373,8 @@ let MINUTES = PLAN_A.minutes;
 // ─── STATE ───────────────────────────────────────────────────────────────────
 let activeSeg = 0;
 let activeTab = 'rotation';
-const GK_H1_OUT = 'Ella S';
-const GK_H2_OUT = 'Neve';
+const GK_H1_OUT = 'Charli';
+const GK_H2_OUT = 'Eloise S';
 
 // ─── RENDER ──────────────────────────────────────────────────────────────────
 function renderSegTabs() {
@@ -401,7 +405,7 @@ function renderRotation() {
     </div>
     <div class="sub-count-badge">
       <div class="sub-count-num">${activeSeg+1}</div>
-      <div class="sub-count-label">of 5</div>
+      <div class="sub-count-label">of ${SEGS.length}</div>
     </div>
   </div>`;
 
@@ -409,7 +413,7 @@ function renderRotation() {
   if (s.htBefore) {
     html += `<div style="background:#1c1400;border:1px solid #78350f;border-radius:8px;padding:8px 14px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
       <span style="font-size:14px;">✅</span>
-      <span style="font-size:12px;font-weight:700;color:#f59e0b;">Half time done — Isla in goal · Arrabella at ST</span>
+      <span style="font-size:12px;font-weight:700;color:#f59e0b;">Half time done — Charli in goal · Eloise S at ST · Arrabella finished</span>
     </div>`;
   }
 
@@ -437,7 +441,7 @@ function renderRotation() {
 
   // Bench
   html += `<div class="card">
-    <div class="card-head"><span>Bench (3)</span></div>
+    <div class="card-head"><span>Bench (${bench.length})</span></div>
     <div class="player-list">
       ${bench.map(n => `<span class="p-tag bench">${n}</span>`).join('')}
     </div>
@@ -466,11 +470,11 @@ function renderRotation() {
     // Half-time GK swap happens FIRST, mid-segment at 25 min — keepers only
     if (sub.htMid) {
       html += `<div class="sub-card-head ht">
-        <span>🥅 HALF TIME — GK swap only</span>
+        <span>🥅 HALF TIME — GK swap + subs</span>
         <span class="sub-time ht">25 min</span>
       </div>
       <div style="padding:6px 14px 2px;font-size:11px;color:#f59e0b;font-weight:600;">
-        At 25 min: swap keepers. No outfield players change here.</div>
+        At the break: swap keepers, then make the three subs below.</div>
       <div class="gk-swap-row">${sub.gkSwap}</div>`;
     }
     // Outfield player subs happen at the END of the segment (30 min)
@@ -570,9 +574,10 @@ function setPitchSeg(i) { pitchSeg = i; render(); }
 function renderSubs() {
   let html = `<div class="subs-wrap">`;
   html += `<div class="subs-intro">
-    <strong>Full squad — 13 players, bench 4.</strong> Subs at 10, 20, 30 and 40 min, two each.
-    Half time GK swap mid-segment at 25 min.
-    Isla + Lacey get 40 min, everyone else 30. GKs <strong>Neve + Ella S</strong> play 50 min.
+    <strong>Neve starts at CM</strong> and Holly covers that role whenever Neve rests.
+    <strong>Zhana stays out of defence</strong> — RF, CF, then LF.
+    Arrabella plays the full first half (25 min at ST) and finishes at the break.
+    35 or 30 min for everyone else. GKs <strong>Eloise S + Charli</strong> play 50 min.
   </div>`;
 
   function subPairsAll(sub) {
